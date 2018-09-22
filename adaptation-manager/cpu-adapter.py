@@ -97,14 +97,14 @@ def webhook():
         print "Alert received ######################################################"
         print(request.json)
 
-        run_sine_experiment()
+        run_adaptation()
         return '', 201
     else:
          abort(400)
 
 def run_adaptation_strategy(attempt, cpu, anomaly_likelihood):
   cmd=''
-  service =  client.inspect_service("web")
+  service =  client.inspect_service("mon_nginx")
   data = json.dumps(service)
   a = json.loads(data)
   ID= a['ID']
@@ -168,7 +168,7 @@ def swarm_over_data():
   return permutations_runner.runWithConfig(SWARM_CONFIG,
     {'maxWorkers': 8, 'overwrite': True})
 
-def run_sine_experiment():
+def run_adaptation():
   input_file = "cpu.csv"
   #generate_data.run(input_file)
   #model_params = swarm_over_data()
