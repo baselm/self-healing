@@ -89,7 +89,7 @@ app = Flask(__name__)
 @app.route('/')
 def hi():
   
-  return "HI, Welcome to adaptation manager"
+  return "<h1> HI, Welcome to adaptation manager </h1>"
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
@@ -98,7 +98,7 @@ def webhook():
         print(request.json)
 
         run_sine_experiment()
-        return '', 200 
+        return '', 201
     else:
          abort(400)
 

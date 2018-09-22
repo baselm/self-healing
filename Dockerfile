@@ -8,7 +8,7 @@ ADD /adaptation-manager /adaptation-manager
 RUN pip install -r /adaptation-manager/requirements.txt
 RUN pip install --upgrade pip
 RUN pip install --upgrade numpy
-EXPOSE 5000 8888
+EXPOSE 8888 8888
 
 WORKDIR /adaptation-manager
 
