@@ -222,9 +222,39 @@ def run_sine_experiment():
 
   #loutput.close()
   # Make sure we wait a total of 2 seconds per iteration.
-   
+
+def run_swarm():
+  input_file = "cpu.csv"
+  generate_data.run(input_file)
+  model_params = swarm_over_data()
+  if PLOT:
+    output = NuPICPlotOutput("final_cpu_output")
+  else:
+    output = NuPICFileOutput("final_cpu_output")
+  model = ModelFactory.create(model_params)
+  model.enableInference({"predictedField": "cpu"})
+
+  with open(input_file, "rb") as sine_input:
+    csv_reader = csv.reader(sine_input)
+
+    # skip header rows
+    csv_reader.next()
+    csv_reader.next()
+    csv_reader.next()
+
+    # the real data
+    for row in csv_reader:
+      timestamp = datetime.datetime.strptime(row[0], DATE_FORMAT)
+      cpu = float(row[1])
+      result = model.run({"cpu": cpu})
+      prediction = result.inferences["multiStepBestPredictions"][1]
+      anomalyScore = result.inferences['anomalyScore']
+      output.write(timestamp, cpu, prediction, anomalyScore)
+
+  output.close()
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000', debug=True)
+    app.run(host='0.0.0.0', port='8888', debug=True)
 
    
