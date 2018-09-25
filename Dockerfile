@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM jupyter/datascience-notebook:latest
 FROM numenta/nupic
 
 MAINTAINER Basel Magableh
