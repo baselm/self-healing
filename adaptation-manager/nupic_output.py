@@ -37,11 +37,11 @@ try:
 except ImportError:
   pass
 
-WINDOW = 200
+WINDOW = 100
 HIGHLIGHT_ALPHA = 0.3
 ANOMALY_HIGHLIGHT_COLOR = 'red'
 WEEKEND_HIGHLIGHT_COLOR = 'yellow'
-ANOMALY_THRESHOLD = 0.75
+ANOMALY_THRESHOLD = 0.9
 
 
 class NuPICOutput(object):
@@ -183,7 +183,7 @@ class NuPICPlotOutput(NuPICOutput):
 
     self._mainGraph = fig.add_subplot(gs[0, 0])
     plt.title(self.name)
-    plt.ylabel('KW Energy Consumption')
+    plt.ylabel('CPU usage')
     plt.xlabel('Date')
 
     self._anomalyGraph = fig.add_subplot(gs[1])
@@ -263,7 +263,7 @@ class NuPICPlotOutput(NuPICOutput):
     anomalyLikelihood = self.anomalyLikelihoodHelper.anomalyProbability(
       value, anomalyScore, timestamp
     )
-     
+
     self.dates.append(timestamp)
     self.convertedDates.append(date2num(timestamp))
     self.value.append(value)

@@ -27,11 +27,12 @@ import math
 import psutil
 import datetime
 import time
-ROWS = 3000
-
+ROWS = 1500
+SECONDS_PER_STEP= 1
 DATE_FORMAT = "%m/%d/%y %H:%M"
-def run(filename="cpu2.csv"):
-  print "Generating sine data into %s" % filename
+
+def run(filename="cpu.csv"):
+  print "Generating CPU data into %s" % filename
   fileHandle = open(filename,"w")
   writer = csv.writer(fileHandle)
   writer.writerow(["timestamp","cpu"])
@@ -40,8 +41,12 @@ def run(filename="cpu2.csv"):
 
   for i in range(ROWS):
     timestamp = time.strftime(DATE_FORMAT)
-    cpu_value = psutil.cpu_percent()
+    cpu_value = psutil.cpu_percent(interval=1)
     writer.writerow([timestamp, cpu_value])
+    try:
+      plt.pause(SECONDS_PER_STEP)
+    except:
+      pass
 
   fileHandle.close()
   print "Generated %i rows of output data into %s" % (ROWS, filename)

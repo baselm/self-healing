@@ -12,4 +12,4 @@ EXPOSE 8888 8888
 
 WORKDIR /adaptation-manager
 
-CMD python cpu-adapter.py
+CMD python cpu_experiment.py
