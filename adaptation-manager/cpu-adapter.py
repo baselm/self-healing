@@ -204,7 +204,7 @@ def run_adapter():
 
       s = time.strftime(DATE_FORMAT)
       timestamp = datetime.datetime.strptime(s, DATE_FORMAT)
-      net_s = psutil.net_io_counters(pernic=True)['docker0'].bytes_sent
+      net_s = psutil.net_io_counters(pernic=True)['eth0'].bytes_sent
       net_s = float(net_s)/1073741824
       result_net_s = model_net.run({"bytes_sent": net_s})
       net_s_prediction = result_net_s.inferences["multiStepBestPredictions"][1]

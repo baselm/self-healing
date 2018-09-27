@@ -27,31 +27,33 @@ import math
 import psutil
 import datetime
 import time
-ROWS = 1500
-SECONDS_PER_STEP= 1
+import requests
+ROWS = 100
+SECONDS_PER_STEP= 30
 DATE_FORMAT = "%m/%d/%y %H:%M"
-
 def run(filename="cpu.csv"):
-  print "Generating CPU data into %s" % filename
+  print "Generating sine data into %s" % filename
   fileHandle = open(filename,"w")
   writer = csv.writer(fileHandle)
   writer.writerow(["timestamp","cpu"])
   writer.writerow(["datetime","float"])
   writer.writerow(["",""])
-
+   
   for i in range(ROWS):
-    timestamp = time.strftime(DATE_FORMAT)
-    cpu_value = psutil.cpu_percent(interval=1)
-    writer.writerow([timestamp, cpu_value])
-    try:
-      plt.pause(SECONDS_PER_STEP)
-    except:
-      pass
-
+              response = requests.get('http://admin:admin@192.168.99.105:9090/api/v1/query?query=sum( 100 - (avg by(node_name) (irate(node_cpu{mode="idle"}[1m]) * on(instance) group_left(node_name) node_meta * 100)))')
+              results = response.json()
+              a = results['data']['result'][0]['value']
+              if len(a) > 0:
+                timestamp = datetime.datetime.fromtimestamp(
+                  float(a[0])).strftime('%m/%d/%y %H:%M')
+                cpu_value = float(a[1])
+                writer.writerow([timestamp, cpu_value])
+              try:
+                plt.pause(SECONDS_PER_STEP)
+              except:
+                pass
   fileHandle.close()
   print "Generated %i rows of output data into %s" % (ROWS, filename)
-
-
 
 if __name__ == "__main__":
   run()
