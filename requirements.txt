@@ -25,7 +25,7 @@ nupic==1.0.4.dev0
 -e git+https://github.com/numenta/nupic.core.git@d6081081957d96c4c0167aaf2224af2df13e657b#egg=nupic.bindings&subdirectory=bindings/py
 ordereddict==1.1
 prettytable==0.7.2
-psutil==1.0.1
+psutil==5.6.6
 py==1.4.34
 pycapnp==0.5.12
 PyMySQL==0.6.2
