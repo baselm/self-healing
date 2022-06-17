@@ -20,7 +20,7 @@ Jinja2==2.10
 MarkupSafe==1.0
 matplotlib==2.1.0
 mock==1.0.1
-numpy==1.12.1
+numpy==1.21.0
 nupic==1.0.4.dev0
 -e git+https://github.com/numenta/nupic.core.git@d6081081957d96c4c0167aaf2224af2df13e657b#egg=nupic.bindings&subdirectory=bindings/py
 ordereddict==1.1
